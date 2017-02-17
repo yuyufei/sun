@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.0.xsd">
+    
+    <!-- 启用spring mvc 注解-->
+   	<mvc:annotation-driven>
+		<!-- 启动JSON格式的配置 -->
+   		<mvc:message-converters>  
+   		<!-- 这里也可以自己定制class -->
+        <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">  
+            <property name="supportedMediaTypes">  
+                <list>  
+                    <value>text/html;charset=UTF-8</value>  <!-- 避免IE出现下载JSON文件的情况 -->
+                </list>  
+            </property>    
+        </bean>  
+    </mvc:message-converters>  
+   	</mvc:annotation-driven>
+   	
+	<!-- 对静态资源文件的访问   缓存一年-->
+	<mvc:resources mapping="/img/**" location="/img/**" />
+	<mvc:resources mapping="/css/**" location="/css/**" />
+	<mvc:resources mapping="/static/**" location="/WEB-INF/jsp/static/" />
+	   
+	 
+	<!-- 自动扫描的包名 ，使Spring支持自动检测组件，如注解的Controller-->
+    <context:component-scan base-package="cn.com.dssp.controller" />
+    
+	
+	<!-- 视图解析器:定义跳转的文件的前后缀 -->  
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+        <property name="prefix" value="/WEB-INF/jsp/" />  
+        <property name="suffix" value=".jsp" />  <!--可为空,方便实现自已的依据扩展名来选择视图解释类的逻辑  -->
+    </bean>  
+    <!--<mvc:view-controller path="/" view-name="forward:/index.jsp"/>  -->
+   
+   
+   
+    <!--访问不了jsp页面的加上这个  -->
+      <mvc:default-servlet-handler/>
+   
+   
+   
+   
+	
+      
+</beans>   
