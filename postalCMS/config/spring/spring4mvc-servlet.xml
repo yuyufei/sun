@@ -25,9 +25,9 @@
    	</mvc:annotation-driven>
    	
 	<!-- 对静态资源文件的访问   缓存一年-->
-	<mvc:resources mapping="/img/**" location="/img/**" />
-	<mvc:resources mapping="/css/**" location="/css/**" />
-	<mvc:resources mapping="/static/**" location="/WEB-INF/jsp/static/" />
+	<!-- <mvc:resources mapping="/WEB-INF/assets/img/" location="/img/**" />
+	<mvc:resources mapping="/WEB-INF/assets/css/" location="/css/**" />
+	<mvc:resources mapping="/WEB-INF/assets/js/" location="/js/**" /> -->
 	   
 	 
 	<!-- 自动扫描的包名 ，使Spring支持自动检测组件，如注解的Controller-->

@@ -1,0 +1,5 @@
+今天配置完框架，将项目commit到git本地后，出现了一个奇怪的问题：tomcat启动不起来，
+原因是NoClassDefFoundError，在编译时候能够找到类，但是运行时期找不到类，这就奇怪了，
+将原项目的E:\mytemplate\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps这个地址里面的
+项目删除，然后重启tomcat，lib包还是加载不进去，导致spring容器起不来，手动添加项目正常能运行，遂重新配置tomcat，重新生成wtpwebapps文件，
+好了，但不知为啥？后续继续研究一下。
