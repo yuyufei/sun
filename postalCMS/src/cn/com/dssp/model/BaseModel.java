@@ -3,11 +3,11 @@ package cn.com.dssp.model;
 import cn.com.dssp.util.core.PageUtil;
 
 /**
- * ´¦Àí·ÖÒ³²éÑ¯
+ * å¤„ç†åˆ†é¡µæŸ¥è¯¢åŠŸèƒ½
  * <p>Title: BaseModel</p>
  * <p>Description: </p>
  * @author	fly
- * @date	2017Äê1ÔÂ18ÈÕÉÏÎç10:28:52
+ * @date	2017å¹´2æœˆ20æ—¥ä¸Šåˆ9:28:36
  * @version 1.0
  */
 public class BaseModel {

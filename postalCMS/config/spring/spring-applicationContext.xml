@@ -103,7 +103,7 @@ http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
         </tx:attributes>  
     </tx:advice>  
 	
-	<!-- MyBatis Mapper.XMl 配置 -->
+		<!-- MyBatis Mapper.XMl 配置 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 	    <!-- <property name="configLocation" value="/WEB-INF/config/db/MyBatisConfiguration.xml" /> -->

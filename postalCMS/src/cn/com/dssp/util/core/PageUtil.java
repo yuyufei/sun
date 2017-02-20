@@ -1,27 +1,26 @@
 package cn.com.dssp.util.core;
 
-
 /**
- * ·ÖÒ³ÊµÏÖ
+ * åˆ†é¡µåŠŸèƒ½
  * <p>Title: PageUtil</p>
  * <p>Description: </p>
  * @author	fly
- * @date	2017Äê1ÔÂ18ÈÕÉÏÎç10:29:28
+ * @date	2017å¹´2æœˆ20æ—¥ä¸Šåˆ9:29:22
  * @version 1.0
  */
 public class PageUtil {
 
-	private Integer pageId = 1; // µ±Ç°Ò³
-	private Integer rowCount = 0; // ×ÜĞĞÊı
-	private Integer pageSize = 10; // Ò³´óĞ¡
-	private Integer pageCount = 0; // ×ÜÒ³Êı
-	private Integer pageOffset = 0;// µ±Ç°Ò³ÆğÊ¼¼ÇÂ¼
-	private Integer pageTail = 0; // µ±Ç°Ò³µ½´ïµÄ¼ÇÂ¼
-	private String queryCondition; //×Ô¶¨ÒåÌõ¼ş
-	private String andCondition; // Ìõ¼ş
-	private String orderByCondition; // ÅÅĞò
-	private boolean paging=false; //Ä¬ÈÏ·ÖÒ³
-	private boolean like=false;   //Ä¬ÈÏÄ£ºı²éÑ¯
+	private Integer pageId = 1; //å½“å‰é¡µ
+	private Integer rowCount = 0; //æ€»è¡Œæ•°
+	private Integer pageSize = 10; //é¡µå¤§å°
+	private Integer pageCount = 0; //æ€»é¡µæ•°
+	private Integer pageOffset = 0;//å½“å‰é¡µèµ·å§‹è®°å½•
+	private Integer pageTail = 0; //å½“å‰é¡µç»ˆæ­¢è®°å½•
+	private String queryCondition; //è‡ªå®šä¹‰æ¡ä»¶
+	private String andCondition; //æ¡ä»¶
+	private String orderByCondition; //æ’åº
+	private boolean paging=false; //é»˜è®¤åˆ†é¡µ
+	private boolean like=false;   //é»˜è®¤æ¨¡ç³ŠæŸ¥è¯¢
 
 	public boolean getLike() {
 		return like;
@@ -39,17 +38,22 @@ public class PageUtil {
 		this.paging = paging;
 	}
 
+	/**
+	 * åˆ†é¡µåˆå§‹åŒ–å‚æ•°
+	 * <p>Title: splitPageInstance</p>
+	 * <p>Description: </p>
+	 */
 	public void splitPageInstance() {
 		if (pageSize < 1 || null == pageSize) {
 			pageSize = 10;
 		}
-		// ×ÜÒ³Êı=(×Ü¼ÇÂ¼Êı+Ã¿Ò³ĞĞÊı-1)/Ã¿Ò³ĞĞÊı
+		//æ€»é¡µæ•°=ï¼ˆæ€»è®°å½•æ•°+æ¯é¡µè¡Œæ•°-1ï¼‰/æ¯è¡Œè¡Œæ•°
 		pageCount = (rowCount + pageSize - 1) / pageSize;
-		// µ±Ç°Ò³´óÓÚ×ÜÒ³Êı
+		//å½“å‰é¡µå¤§äºæ€»é¡µæ•°
 		if (pageId > pageCount) {
 			pageId = pageCount;
 		}
-		// ·ÀÖ¹ pageOffset Ğ¡ÓÚ 0
+		//é˜²æ­¢pageoffsetå°äº0
 		pageOffset = ((pageId - 1) * pageSize);
 		if (pageOffset < 0)
 			pageOffset = 0;

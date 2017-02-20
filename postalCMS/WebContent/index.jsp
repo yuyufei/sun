@@ -40,9 +40,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </form>
         </div>
         <div>
-        <h1>ss</h1>
+        <h1>盘置青梅,一樽煮酒</h1>
         </div>
-        <div class="margin-top: 30px;" align="center">版权所有 @ <a  href="550639698@qq.com">fly</a></div>
+        <div  align="center">版权所有 @ <a  href="https://mail.qq.com/">fly</a></div>
 
         <!-- Javascript -->
         <script src="<%=basePath%>assets/js/jquery-1.8.2.min.js"></script>
