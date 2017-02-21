@@ -39,9 +39,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="error"><span>+</span></div>
             </form>
         </div>
-        <div>
-        <h1>盘置青梅,一樽煮酒</h1>
-        </div>
+        <div style="margin-top: 15px;">
+					<div style="width: 194px;" align="left">
+						<label for="name">验证码：</label> 
+						<input class="easyui-validatebox" type="text" name="verifyCode" style="width:60px;" value=""/> 
+						<span style="margin-left: 2px;" /> 
+						<a style="text-align: center;" id="verifyClick" title="点击 刷新?" href="javascript:void(0);"> 
+						<img style="width:65px;height:22px;" align="absmiddle" id="verifyCode" src="${demoPath}admin/verifyCode.html" /> </a>
+					</div>
+		</div>
         <div  align="center">版权所有 @ <a  href="https://mail.qq.com/">fly</a></div>
 
         <!-- Javascript -->
