@@ -18,7 +18,7 @@ public interface BaseMapper<T> {
 	public T selectByPrimaryKey(Object key) throws Exception;
 	public Integer updateByPrimaryKey(T t)throws Exception;
 	public Integer deleteByPrimaryKey(Object key)throws Exception;
-	public Integer insert(T t)throws Exception;
+	public Integer insertModel(T t)throws Exception;
 	
 	public Integer deleteByEntity(T entity)throws Exception;
 	

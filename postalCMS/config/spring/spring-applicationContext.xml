@@ -69,19 +69,6 @@ http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
 	</bean>
 	
 	
-	<!-- druid 监控  spring  -->
-	<bean id="druid-stat-interceptor" class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor"/>
-	<bean id="druid-stat-pointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut" scope="prototype">
-		<property name="patterns">
-			<list>
-				<value>cn.com.dssp.service.*</value>
-			</list>
-		</property>
-	</bean>
-	<aop:config>
-		<aop:advisor advice-ref="druid-stat-interceptor" pointcut-ref="druid-stat-pointcut" />
-	</aop:config>
-	
 	<!-- ***************事务配置************** -->
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
@@ -106,14 +93,13 @@ http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
 		<!-- MyBatis Mapper.XMl 配置 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-	    <!-- <property name="configLocation" value="/WEB-INF/config/db/MyBatisConfiguration.xml" /> -->
+	    <property name="configLocation" value="classpath:mybatis/mybatis-config.xml" /> 
 	    <property name="mapperLocations"  value="classpath*:cn/com/dssp/dao/mapper/*.xml"/> 
         <!-- <property name="typeAliasesPackage" value="${mybatis.alias.basepackage}" /> -->
 	</bean>
 	
 	<!-- MyBatis 接口编程配置  -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">    
-	    <!-- <property name="basePackage" value="cms.sm.mapper" /> -->
 	    <!-- basePackage指定要扫描的包，在此包之下的映射器都会被搜索到,可指定多个包，包与包之间用逗号或分号分隔-->
 	    <property name="basePackage" value="cn.com.dssp.dao" />
 	    <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />

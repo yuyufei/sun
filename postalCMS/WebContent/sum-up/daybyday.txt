@@ -1,0 +1,7 @@
+第一天：将最基本的实体类创建完成，并写完sql建表语句，写完了生成验证码的方法，写完对session的各种操作。
+第二天：将基本方法MethodUtil写完，包括MD5加解密，对日期尽心运算，向前台刷新json数据以及js脚本以及保存ip等方法，将生成的
+ 验证码写在了一个servlet中，还不知道什么时间调用。
+ 第三天：在初始页面中装载验证码，初步认为<img>属性的src会调用页面时候自动加载，所以会调用后台的验证码。修改了初始页面的supersized.3.2.7.min.js
+ 文件，如果以后需要在初始页面加图片，直接在里面配置即可。下午进行配置日志记录的时候发现mybatis的dao层注入不到serevice层，报的是需要至少一个类需要得到，修改配置文件<property name="basePackage" value="cn.com.dssp.dao" />解决，以后注意。
+紧接着又遇见一个奇葩错误，xml文件跟dao文件绑定不了，配置了<property name="mapperLocations"  value="classpath*:cn/com/dssp/dao/mapper/*.xml"/>才解决，很奇怪在xml文件不是已经配置了dao的位置，以前没有配置为什么没出这个问题，有时间考虑。
+设计过程中还有一个问题，自定义一个BaseServiceImpl，所有service都实现这个类，但是这个service的mapper可以操作数据库，问题是其他的具体类的mapper如何注入到这个基本类的mapper中的(而且只能通过getmapper()得到的进行操作，直接用定义的mapper会报空指针)。
