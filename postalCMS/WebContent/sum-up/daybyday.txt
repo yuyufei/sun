@@ -5,3 +5,4 @@
  文件，如果以后需要在初始页面加图片，直接在里面配置即可。下午进行配置日志记录的时候发现mybatis的dao层注入不到serevice层，报的是需要至少一个类需要得到，修改配置文件<property name="basePackage" value="cn.com.dssp.dao" />解决，以后注意。
 紧接着又遇见一个奇葩错误，xml文件跟dao文件绑定不了，配置了<property name="mapperLocations"  value="classpath*:cn/com/dssp/dao/mapper/*.xml"/>才解决，很奇怪在xml文件不是已经配置了dao的位置，以前没有配置为什么没出这个问题，有时间考虑。
 设计过程中还有一个问题，自定义一个BaseServiceImpl，所有service都实现这个类，但是这个service的mapper可以操作数据库，问题是其他的具体类的mapper如何注入到这个基本类的mapper中的(而且只能通过getmapper()得到的进行操作，直接用定义的mapper会报空指针)。
+第四天：写了页面的登录过程中，用户名密码的验证，以及向下一步所有功能页面跳转，并用日志service进行记录。
