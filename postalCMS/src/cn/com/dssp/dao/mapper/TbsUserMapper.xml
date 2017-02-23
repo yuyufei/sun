@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+         符号转义说明
+    &lt;          < 
+    &gt;          >  
+    &lt;&gt;     <>
+    &amp;        & 
+    &apos;       '
+    &quot;       "
+  <![CDATA[ 这里写你的SQL或者符号 ]]> 
+ -->
+<mapper namespace="cn.com.dssp.dao.TbsMenuMapper">
+
+<!-- Result Map 数据库映射到实体类  -->
+<resultMap id="tableMapToModel" type="model.TbsMenuModel" >
+	<result column="id" property="id"/>
+	<result column="parentId" property="parentId"/>
+	<result column="name" property="name"/>
+	<result column="isMenu" property="isMenu"/>
+	<result column="type" property="type"/>
+	<result column="sortNumber" property="sortNumber"/>
+	<result column="url" property="url"/>
+	<result column="button" property="button"/>
+	<result column="status" property="status"/>
+	<result column="createTime" property="createTime"/>
+	<result column="index1" property="index1"/>
+	<result column="index2" property="index2"/>
+</resultMap>
+
+<!-- tbaleColumns  所有列 -->
+<!--  id,name,password,nickName,email,icon,state,time,count,createTime,remark -->
+<sql id="tableColumns">
+	<trim suffix="" suffixOverrides=",">
+		id,parentId,name,isMenu,type,sortNumber,url,button,status,createTime,		
+	</trim>
+</sql>
+
+<!-- 查询条件  包含所有 -->
+<sql id="andOtherAll">
+	<trim  suffixOverrides="," >
+		<if test="id != null and id != '' " >
+			and id =  #{id}
+	    </if>
+		<if test="parentId != null and parentId != '' " >
+			and parentId =  #{parentId}
+	    </if>
+		<if test="name != null and name != '' " >
+			and name =  #{name}
+	    </if>
+		<if test="isMenu != null " >
+			and isMenu =  #{isMenu}
+		</if>
+		<if test="type != null " >
+			and type =  #{type}
+		</if>
+		<if test="sortNumber != null " >
+			and sortNumber =  #{sortNumber}
+		</if>
+		<if test="url != null and url != '' " >
+			and url =  #{url}
+	    </if>
+		<if test="button != null and button != '' " >
+			and button =  #{button}
+	    </if>
+		<if test="status != null " >
+			and status =  #{status}
+		</if>
+		<if test="createTime != null " >
+			and createTime =  #{createTime}
+		</if>
+	</trim>
+</sql>
+
+<!-- where 条件  -->
+<sql id="where">
+     where 1=1
+</sql>
+
+<!-- 查询条件 -->
+<sql id="queryCondition">
+     <if test="queryCondition != null and queryCondition != ''">
+         ${queryCondition}
+     </if>
+</sql>
+
+<select resultMap="tableMapToModel" requestParameter="java.util.Map">
+select <include refid="tableColumns"/> from tbsMenu <include refid="where"/> <include refid="andOtherAll"/>
+${queryCondition}
+<if test="andCondition !=null and andCondition !=''">
+	   and ${andCondition}
+	</if>
+	<if test="orderCondition != null and queryCondition != ''" >
+    	order by ${orderCondition}
+    </if>
+</select>
+
+</mapper>

@@ -104,13 +104,11 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 
 	@Override
 	public List<T> selectByMap(Map<?, ?> map) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return getMapper().selectByMap(map);
 	}
 
 	@Override
 	public List<Map<?, ?>> charts(Map<?, ?> map) throws Exception {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

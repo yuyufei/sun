@@ -51,6 +51,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					$.messager.progress('close');
 					var result=eval('('+data+')');
 					if(result.success){
+						//alert(111);
 						window.location.href='${demoPath}admin/index.html';
 						return;
 					}
@@ -114,8 +115,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div style="width: 299px;" align="left">
 						<label for="name">验证码：</label> 
 						<input class="easyui-validatebox" type="text" name="verifyCode" style="width:60px;" value=""/> 
-						<img style="width:100px;height:40px;" align="absmiddle" id="verifyCode" src="${demoPath}admin/verifyCode.html"><a style="text-align: center;" id="verifyClick" title="点击 刷新?" href="javascript:void(0);"> 
-						 </a>
+						<a style="text-align: center;" id="verifyClick" title="点击 刷新?" href="javascript:void(0);"><img style="width:100px;height:40px;" align="absmiddle" id="verifyCode" src="${demoPath}admin/verifyCode.html"></a>
 				   </div>
 		        </div>
 		        <div style="margin-top: 15px;">

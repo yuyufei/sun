@@ -1,21 +1,26 @@
 package cn.com.dssp.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import cn.com.dssp.model.TbsLoginLogModel;
+import cn.com.dssp.model.TbsMenuModel;
 import cn.com.dssp.model.TbsUserModel;
 import cn.com.dssp.service.TbsLoginLogService;
+import cn.com.dssp.service.TbsMenuService;
+import cn.com.dssp.service.TbsUserService;
 import cn.com.dssp.util.core.MethodUtil;
 import cn.com.dssp.util.core.SessionUtil;
 
@@ -27,7 +32,10 @@ public class SystemIndexControllerAdmin {
 	private StringBuffer sb=new StringBuffer();
 	@Autowired
 	private TbsLoginLogService<TbsLoginLogModel> logService;
-	
+	@Autowired
+	private TbsUserService<TbsUserModel> userService;
+	@Autowired
+	private TbsMenuService<TbsMenuModel> menuService;
 	@RequestMapping(value="login.html",method=RequestMethod.GET)
 	public String login(){
 		return "admin/login";
@@ -66,8 +74,47 @@ public class SystemIndexControllerAdmin {
 			return;
 		}
 		Map<String, Object> map=new HashMap<>();
-		
+		map.put("username", userModel.getUsername());
+		map.put("password", util.getDES("desKey!@#", userModel.getPassword(), 0));
+		List<TbsUserModel> ltub=   userService.selectByMap(map);
+		if(null==ltub || ltub.size()!=1){
+			msg="用户名密码有误";
+			util.toJsonMsg(response, 1, msg);
+			logModel.setMsg(msg);
+			logService.insert(logModel);
+			return;
+		}
+		userModel=ltub.get(0);
+		Integer isAdmin=userModel.getIsAdmin()==null ? 1 :userModel.getIsAdmin();
+		SessionUtil.setAttr(request, "isAdmin", ""+isAdmin);
+		SessionUtil.setAttr(request, "tbsUserModel", userModel);
+		List<String> authUrls=new ArrayList<>();
+	    authUrls.add("/admin/index.html");
+	    SessionUtil.setAttr(request, "authUrls", authUrls);
+	    util.toJsonMsg(response, 0, null);
+	    logModel.setStatus(0);//成功
+	    logModel.setMsg("登陆成功，"+(isAdmin==0 ? "超级管理员":"授权管理员"));
+	    logService.insert(logModel);
+	    return;
 	}
 	
+	/**
+	 * 主页
+	 * <p>Title: index</p>
+	 * <p>Description: </p>
+	 * @return
+	 */
+	@RequestMapping("/index.html")
+	public String index(HttpServletRequest request,ModelMap modelMap) throws Exception{
+		Map<String, Object> map=new HashMap<>();
+		map.put("andCondition", "parentId IS NULL");
+		map.put("orderCondition", "sortNumber");
+		List<TbsMenuModel> parentMenu=menuService.selectByMap(map);
+		String isAdmin=(String) SessionUtil.getAttr(request, "isAdmin");
+        if(null!=isAdmin && isAdmin.equals("0")){//管理员
+        	
+        }
+		return "admin/login";
+	}
 
 }
