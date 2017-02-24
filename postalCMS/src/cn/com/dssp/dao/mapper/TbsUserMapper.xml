@@ -12,30 +12,35 @@
     &quot;       "
   <![CDATA[ 这里写你的SQL或者符号 ]]> 
  -->
-<mapper namespace="cn.com.dssp.dao.TbsMenuMapper">
+<mapper namespace="cn.com.dssp.dao.TbsUserMapper">
 
 <!-- Result Map 数据库映射到实体类  -->
-<resultMap id="tableMapToModel" type="model.TbsMenuModel" >
+<resultMap id="tableMapToModel" type="cn.com.dssp.model.TbsUserModel" >
 	<result column="id" property="id"/>
-	<result column="parentId" property="parentId"/>
-	<result column="name" property="name"/>
-	<result column="isMenu" property="isMenu"/>
-	<result column="type" property="type"/>
-	<result column="sortNumber" property="sortNumber"/>
-	<result column="url" property="url"/>
-	<result column="button" property="button"/>
-	<result column="status" property="status"/>
+	<result column="username" property="username"/>
+	<result column="password" property="password"/>
 	<result column="createTime" property="createTime"/>
+	<result column="ip" property="ip"/>
+	<result column="count" property="count"/>
+	<result column="isLock" property="isLock"/>
+	<result column="lockTime" property="lockTime"/>
+	<result column="failCount" property="failCount"/>
+	<result column="isAdmin" property="isAdmin"/>
 	<result column="index1" property="index1"/>
 	<result column="index2" property="index2"/>
+	<result column="index3" property="index3"/>
 </resultMap>
 
-<!-- tbaleColumns  所有列 -->
-<!--  id,name,password,nickName,email,icon,state,time,count,createTime,remark -->
+<!--tableColumns 所有列  -->
 <sql id="tableColumns">
-	<trim suffix="" suffixOverrides=",">
-		id,parentId,name,isMenu,type,sortNumber,url,button,status,createTime,		
-	</trim>
+<trim suffix="" suffixOverrides=",">
+id,username,password,createTime,ip,count,isLock,lockTime,failCount,isAdmin
+</trim>
+</sql>
+
+<!--where 条件  -->
+<sql id="where">
+where 1=1
 </sql>
 
 <!-- 查询条件  包含所有 -->
@@ -44,57 +49,51 @@
 		<if test="id != null and id != '' " >
 			and id =  #{id}
 	    </if>
-		<if test="parentId != null and parentId != '' " >
-			and parentId =  #{parentId}
+		<if test="username != null and username != '' " >
+			and username =  #{username}
 	    </if>
-		<if test="name != null and name != '' " >
-			and name =  #{name}
+		<if test="password != null and password != '' " >
+			and password =  #{password}
 	    </if>
-		<if test="isMenu != null " >
-			and isMenu =  #{isMenu}
-		</if>
-		<if test="type != null " >
-			and type =  #{type}
-		</if>
-		<if test="sortNumber != null " >
-			and sortNumber =  #{sortNumber}
-		</if>
-		<if test="url != null and url != '' " >
-			and url =  #{url}
-	    </if>
-		<if test="button != null and button != '' " >
-			and button =  #{button}
-	    </if>
-		<if test="status != null " >
-			and status =  #{status}
-		</if>
 		<if test="createTime != null " >
 			and createTime =  #{createTime}
+		</if>
+		<if test="ip != null and ip != '' " >
+			and ip =  #{ip}
+	    </if>
+		<if test="count != null " >
+			and count =  #{count}
+		</if>
+		<if test="isLock != null " >
+			and isLock =  #{isLock}
+		</if>
+		<if test="lockTime != null " >
+			and lockTime =  #{lockTime}
+		</if>
+		<if test="failCount != null " >
+			and failCount =  #{failCount}
+		</if>
+		<if test="isAdmin != null " >
+			and isAdmin =  #{isAdmin}
 		</if>
 	</trim>
 </sql>
 
-<!-- where 条件  -->
-<sql id="where">
-     where 1=1
-</sql>
-
-<!-- 查询条件 -->
+<!--查询条件  -->
 <sql id="queryCondition">
-     <if test="queryCondition != null and queryCondition != ''">
-         ${queryCondition}
-     </if>
+  <if test="queryCondition != null and queryCondition != ''">
+  ${queryCondition}
+  </if>
 </sql>
-
-<select resultMap="tableMapToModel" requestParameter="java.util.Map">
-select <include refid="tableColumns"/> from tbsMenu <include refid="where"/> <include refid="andOtherAll"/>
-${queryCondition}
-<if test="andCondition !=null and andCondition !=''">
+<!-- 查询，参数查询 Map -->
+<select id="selectByMap" resultMap="tableMapToModel" parameterType="java.util.Map">
+select <include refid="tableColumns"/>from TbsUser <include refid="where"/><include refid="andOtherAll"/>
+ ${queryCondition}
+	<if test="andCondition !=null and andCondition !=''">
 	   and ${andCondition}
 	</if>
 	<if test="orderCondition != null and queryCondition != ''" >
     	order by ${orderCondition}
     </if>
 </select>
-
 </mapper>

@@ -112,7 +112,55 @@ public class SystemIndexControllerAdmin {
 		List<TbsMenuModel> parentMenu=menuService.selectByMap(map);
 		String isAdmin=(String) SessionUtil.getAttr(request, "isAdmin");
         if(null!=isAdmin && isAdmin.equals("0")){//管理员
-        	
+        	for(int i=0;i<parentMenu.size();i++){
+        		String id=parentMenu.get(i).getId();
+        		map.clear();
+        		map.put("parentId", id);
+        		List<TbsMenuModel> child=menuService.selectByMap(map);
+        		for(int j=0;j<child.size();j++){ //判断有没有子目录的list，然后将子元素放入到集合里面
+        			if(parentMenu.get(i).getListTbsMenuModel()==null){
+        				parentMenu.get(i).setListTbsMenuModel(new ArrayList<TbsMenuModel>());
+        			}
+        			parentMenu.get(i).getListTbsMenuModel().add(child.get(j));
+        		}
+        	}
+        	modelMap.put("listTbsMenuModel", parentMenu);
+        	return "admin/login";
+        }
+        //其他用户(需要先添加可以访问的地址)
+        TbsUserModel tbsUserModel=(TbsUserModel) SessionUtil.getAttr(request, "tbsUserModel");
+        List<String> authUrls=(List<String>) SessionUtil.getAttr(request, "authUrls");
+        map.clear();
+        map.put("column", "menuIdFun");
+        map.put("userId", tbsUserModel.getId());
+        List<Map<String, Object>> childMenu=userService.selectByRoleUrls(map);
+        if(childMenu != null && childMenu.size()>0){ //添加授权地址
+        	for(int i=0;i<childMenu.size();i++){
+        		String roleUrls=(String) childMenu.get(i).get("url");
+        		String[] urls=roleUrls.split("\\,");
+        		for(int j=0;j<urls.length;j++){
+        			logger.debug("addUrl:"+urls[j]);
+        			authUrls.add("/"+urls[j]);
+        		}
+        	}
+        }
+        map.clear();
+        map.put("column", "menuId");
+        map.put("userId", tbsUserModel.getId());
+        childMenu=userService.selectByRoleUrls(map);
+        for(int i=0;i<parentMenu.size();i++){//通过主菜单查找子菜单
+        	TbsMenuModel tbsMenuModel=parentMenu.get(i);
+        	if(null!=childMenu && childMenu.size()>0){
+        		for(int j=0;j<childMenu.size();j++){
+        			Map<String, Object> childMap=childMenu.get(j);
+        			logger.info("childMap:"+childMap);
+        			String parentId=(String) childMap.get("parentId");
+        			if(tbsMenuModel !=null && tbsMenuModel.getId().equals(parentId)){
+        				//在所有子菜单中查找具有相同父Id的菜单
+        				
+        			}
+        		}
+        	}
         }
 		return "admin/login";
 	}
